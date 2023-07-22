@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
-import { container } from 'tsyringe';
-import BookController from './book/BookController';
+import { container } from './tsyringe/src';
+import BookController from './src/book/BookController';
 const port = process.env.port || 5000;
 
 const app = express();

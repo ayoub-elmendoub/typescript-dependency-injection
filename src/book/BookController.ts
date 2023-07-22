@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { autoInjectable } from 'tsyringe';
+import { injectable } from '../../tsyringe/src';
 import BookService from './BookService';
+import { constructor } from 'tsyringe/dist/typings/types';
 
-@autoInjectable()
+@MyInjectable()
+@injectable()
 export default class BookController {
   bookService: BookService;
   router: Router;
@@ -19,5 +21,16 @@ export default class BookController {
   routes() {
     this.router.get('/', (_req, res) => res.send(this.getBooksRoute()));
     return this.router;
+  }
+}
+
+function MyInjectable() {
+  return function(target: any): any {
+    const params: any[] = Reflect.getMetadata("design:paramtypes", target) || [];
+    console.log('target: ', target);
+    console.log('params: ', params);
+    console.log(params[0].test());
+    
+    return target
   }
 }
